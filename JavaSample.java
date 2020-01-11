@@ -6,6 +6,7 @@ public class JavaSample {
         sub.callInstanceVariableSuperOnly();
     }
 }
+
 class SuperClass {
     private String instanceVariable = "SuperClass";
     private String instanceVariableSuperOnly = "SuperClassOnly";
