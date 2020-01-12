@@ -5,6 +5,13 @@
 ちょっとした動作確認にはmonoを使うと便利です。
 
 ```
-csc hello.cs
-mono hello.cs
+csc CSharpSample.cs
+mono CSharpSample.cs
+```
+
+## swiftのコンパイルと実行 
+
+```
+swiftc -emit-executable swift-sample.swift
+./swift-sample
 ```
