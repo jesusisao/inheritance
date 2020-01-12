@@ -41,7 +41,6 @@ class SubClass extends SuperClass {
 // -------------------------------------------
 
 class SuperClassProtected {
-    // 
     protected String instanceVariable = "SuperClass";
     protected String instanceVariableSuperOnly = "SuperClassOnly";
 
