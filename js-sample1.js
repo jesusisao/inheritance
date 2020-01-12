@@ -24,6 +24,8 @@ class SubClass extends SuperClass {
   }
 }
 
+console.log('---- SubClass ----')
+
 const sub = new SubClass()
 sub.superClassMethod()
 sub.subClassMethod()
@@ -48,6 +50,7 @@ LegacySubClass.prototype.subClassMethod = function() {
   console.log(this.instanceVariable)
 };
 
+console.log('---- LegacySubClass ----')
 var lsub = new LegacySubClass()
 lsub.superClassMethod()
 lsub.subClassMethod()

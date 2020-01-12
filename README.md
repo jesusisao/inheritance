@@ -9,9 +9,16 @@ csc CSharpSample.cs
 mono CSharpSample.cs
 ```
 
-## swiftのコンパイルと実行 
+## Swiftのコンパイルと実行 
 
 ```
 swiftc -emit-executable swift-sample.swift
 ./swift-sample
+```
+
+## Kotlinのコンパイルと実行
+
+```
+kotlinc KtSample.kt -include-runtime -d KtSample.jar
+java -jar KtSample.jar
 ```
