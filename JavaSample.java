@@ -1,14 +1,12 @@
 public class JavaSample {
     public static void main(String[] args) {
         System.out.println("---- SubClass ----");
-
         SubClass sub = new SubClass();
         sub.superClassMethod();
         sub.subClassMethod();
         sub.callInstanceVariableSuperOnly();
 
         System.out.println("---- SubClassProtected ----");
-
         SubClassProtected sub2 = new SubClassProtected();
         sub2.superClassMethod();
         sub2.subClassMethod();

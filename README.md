@@ -22,3 +22,10 @@ swiftc -emit-executable swift-sample.swift
 kotlinc KtSample.kt -include-runtime -d KtSample.jar
 java -jar KtSample.jar
 ```
+
+## C++のコンパイルと実行
+
+```
+g++ cpp_sample.cpp
+./a.out
+```
