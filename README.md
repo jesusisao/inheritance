@@ -31,6 +31,13 @@ kotlinc KtSample.kt -include-runtime -d KtSample.jar
 java -jar KtSample.jar
 ```
 
+## Scalaのコンパイルと実行
+
+```
+scalac scala-sample.scala
+scala ScalaSample
+```
+
 ## C++のコンパイルと実行
 
 ```
