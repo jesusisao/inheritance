@@ -21,7 +21,37 @@ class SubClass: SuperClass {
   }
 }
 
+// --------------------------------
+
+// プロパティにしてgetterを生やす。こうしたら関数扱いなのでoverrideができるようになる。
+class SuperClassGetter {
+  var instanceVariable: String { get { return "SuperClass" } }
+  var instanceVariableSuperOnly: String { get { return "SuperClassOnly" } }
+
+  func SuperClassMethod() {
+    print(instanceVariable);
+  }
+
+  func CallInstanceVariableSuperOnly() {
+    print(instanceVariableSuperOnly);
+  }
+}
+
+class SubClassGetter: SuperClassGetter {
+  override var instanceVariable: String { get { return "SubClass" } };
+
+  func SubClassMethod() {
+    print(instanceVariable);
+  }
+}
+
+
 let sub = SubClass();
 sub.SuperClassMethod();
 sub.SubClassMethod();
 sub.CallInstanceVariableSuperOnly();
+
+let subg = SubClassGetter();
+subg.SuperClassMethod();
+subg.SubClassMethod();
+subg.CallInstanceVariableSuperOnly();
