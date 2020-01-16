@@ -14,7 +14,7 @@ deno ts-sample.ts
 
 ```
 csc CSharpSample.cs
-mono CSharpSample.cs
+mono CSharpSample.exe
 ```
 
 ## Swiftのコンパイルと実行 
