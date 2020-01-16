@@ -7,10 +7,16 @@ public class JavaSample {
         sub.callInstanceVariableSuperOnly();
 
         System.out.println("---- SubClassProtected ----");
-        SubClassProtected sub2 = new SubClassProtected();
-        sub2.superClassMethod();
-        sub2.subClassMethod();
-        sub2.callInstanceVariableSuperOnly();
+        SubClassProtected subp = new SubClassProtected();
+        subp.superClassMethod();
+        subp.subClassMethod();
+        subp.callInstanceVariableSuperOnly();
+
+        System.out.println("---- SubClassGetter ----");
+        SubClassGetter subg = new SubClassGetter();
+        subg.superClassMethod();
+        subg.subClassMethod();
+        subg.callInstanceVariableSuperOnly();
     }
 }
 
@@ -59,5 +65,34 @@ class SubClassProtected extends SuperClassProtected {
         System.out.println(instanceVariable);
         // superをつけると、"SuperClass"と表示させることもできる
         // System.out.println(super.instanceVariable);
+    }
+}
+
+// -------------------------------------------
+
+class SuperClassGetter {
+    protected String instanceVariable() {
+        return "SuperClass";
+    }
+    protected String instanceVariableSuperOnly() {
+        return "SuperClassOnly";
+    }
+
+    public void superClassMethod() {
+        System.out.println(instanceVariable());
+    }
+
+    public void callInstanceVariableSuperOnly() {
+        System.out.println(instanceVariableSuperOnly());
+    }
+}
+
+class SubClassGetter extends SuperClassGetter {
+    protected String instanceVariable() {
+        return "SubClass";
+    }
+
+    public void subClassMethod() {
+        System.out.println(instanceVariable());
     }
 }
