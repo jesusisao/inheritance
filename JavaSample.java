@@ -44,12 +44,12 @@ class SuperClassProtected {
 class SubClassProtected extends SuperClassProtected {
     protected String instanceVariable = "SubClass";
 
-    public void subClassMethod() {
+    // public void subClassMethod() {
+        // System.out.println(instanceVariable); と書くと、
         // System.out.println(this.instanceVariable); と同じ。"SubClass"が出る。
-        System.out.println(instanceVariable);
         // superをつけると、"SuperClass"と表示させることもできる
         // System.out.println(super.instanceVariable);
-    }
+    // }
 }
 
 // -------------------------------------------
