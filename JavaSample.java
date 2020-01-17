@@ -11,6 +11,10 @@ public class JavaSample {
         System.out.println("---- SubClassGetter ----");
         SubClassGetter subg = new SubClassGetter();
         subg.superClassMethod();
+
+        System.out.println("---- SubClassGetterProtected ----");
+        SubClassGetterProtected subgp = new SubClassGetterProtected();
+        subgp.superClassMethod();
     }
 }
 
@@ -51,7 +55,7 @@ class SubClassProtected extends SuperClassProtected {
 // -------------------------------------------
 
 class SuperClassGetter {
-    protected String instanceVariable() {
+    private String instanceVariable() {
         return "SuperClass";
     }
 
@@ -61,6 +65,24 @@ class SuperClassGetter {
 }
 
 class SubClassGetter extends SuperClassGetter {
+    private String instanceVariable() {
+        return "SubClass";
+    }
+}
+
+// -------------------------------------------
+
+class SuperClassGetterProtected {
+    protected String instanceVariable() {
+        return "SuperClass";
+    }
+
+    public void superClassMethod() {
+        System.out.println(instanceVariable());
+    }
+}
+
+class SubClassGetterProtected extends SuperClassGetterProtected {
     protected String instanceVariable() {
         return "SubClass";
     }
