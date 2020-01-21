@@ -7,47 +7,39 @@ public class CSharpSample
         Console.WriteLine("---- SubClass ----");
         var sub = new SubClass();
         sub.SuperClassMethod();
-        sub.SubClassMethod();
-        sub.CallInstanceVariableSuperOnly();
 
         Console.WriteLine("---- SubClassProtected ----");
         var subp = new SubClassProtected();
         subp.SuperClassMethod();
-        subp.SubClassMethod();
-        subp.CallInstanceVariableSuperOnly();
 
         Console.WriteLine("---- SubClassGetter ----");
         var subg = new SubClassGetter();
         subg.SuperClassMethod();
-        subg.SubClassMethod();
-        subg.CallInstanceVariableSuperOnly();
+
+        Console.WriteLine("---- SubClassGetterProtectedOverride ----");
+        var subgpo = new SubClassGetterProtectedOverride();
+        subgpo.SuperClassMethod();
+
+        Console.WriteLine("---- SubClassGetterProtectedNew ----");
+        var subgpn = new SubClassGetterProtectedNew();
+        subgpn.SuperClassMethod();
     }
 }
 
 class SuperClass
 {
     private string instanceVariable = "SuperClass";
-    private string instanceVariableSuperOnly = "SuperClassOnly";
 
     public void SuperClassMethod()
     {
         Console.WriteLine(instanceVariable);
     }
-
-    public void CallInstanceVariableSuperOnly()
-    {
-        Console.WriteLine(instanceVariableSuperOnly);
-    }
 }
 
 class SubClass : SuperClass
 {
+    // warning CS0414: The field 'SubClass.instanceVariable' is assigned but its value is never used
     private string instanceVariable = "SubClass";
-
-    public void SubClassMethod()
-    {
-        Console.WriteLine(instanceVariable);
-    }
 }
 
 // ----------------------------
@@ -55,16 +47,10 @@ class SubClass : SuperClass
 class SuperClassProtected
 {
     protected string instanceVariable = "SuperClass";
-    protected string instanceVariableSuperOnly = "SuperClassOnly";
 
     public void SuperClassMethod()
     {
         Console.WriteLine(instanceVariable);
-    }
-
-    public void CallInstanceVariableSuperOnly()
-    {
-        Console.WriteLine(instanceVariableSuperOnly);
     }
 }
 
@@ -72,16 +58,37 @@ class SubClassProtected : SuperClassProtected
 {
     // newはオーバーライドではなく、継承元のインスタンス変数隠しているよと明示している
     new protected string instanceVariable = "SubClass";
-
-    public void SubClassMethod()
-    {
-        Console.WriteLine(instanceVariable);
-    }
 }
 
 // ----------------------------
 
 class SuperClassGetter
+{
+    private string instanceVariable
+    { 
+        get { 
+            return "SuperClass";
+        }
+    }
+
+    public void SuperClassMethod()
+    {
+        Console.WriteLine(instanceVariable);
+    }
+}
+
+class SubClassGetter : SuperClassGetter
+{
+    private string instanceVariable {
+        get {
+            return "SubClass";
+        }
+    }
+}
+
+// ----------------------------
+
+class SuperClassGetterProtected
 {
     protected virtual string instanceVariable
     { 
@@ -90,29 +97,26 @@ class SuperClassGetter
         }
     }
 
-    protected string instanceVariableSuperOnly = "SuperClassOnly";
-
     public void SuperClassMethod()
     {
         Console.WriteLine(instanceVariable);
     }
-
-    public void CallInstanceVariableSuperOnly()
-    {
-        Console.WriteLine(instanceVariableSuperOnly);
-    }
 }
 
-class SubClassGetter : SuperClassGetter
+class SubClassGetterProtectedOverride : SuperClassGetterProtected
 {
     protected override string instanceVariable {
         get {
             return "SubClass";
         }
     }
+}
 
-    public void SubClassMethod()
-    {
-        Console.WriteLine(instanceVariable);
+class SubClassGetterProtectedNew : SuperClassGetterProtected
+{
+    protected new string instanceVariable {
+        get {
+            return "SubClass";
+        }
     }
 }

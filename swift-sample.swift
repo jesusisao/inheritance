@@ -1,24 +1,28 @@
 class SuperClass {
-  let instanceVariable = "SuperClass";
-  let instanceVariableSuperOnly = "SuperClassOnly";
+  private let instanceVariable = "SuperClass";
 
   func SuperClassMethod() {
     print(instanceVariable);
   }
-
-  func CallInstanceVariableSuperOnly() {
-    print(instanceVariableSuperOnly);
-  }
 }
 
 class SubClass: SuperClass {
-  // let instanceVariable = "SubClass"; を書くと
-  // error: cannot override with a stored property 'instanceVariable'
-  let instanceVariable2 = "SubClass";
+  private let instanceVariable = "SubClass";
+}
 
-  func SubClassMethod() {
-    print(instanceVariable2);
+// --------------------------------
+
+class SuperClassInternalLet {
+  let instanceVariable = "Error";
+
+  func SuperClassMethod() {
+    print(instanceVariable);
   }
+}
+
+class SubClassInternalLet: SuperClassInternalLet {
+  // error: cannot override with a stored property 'instanceVariable'
+  // let instanceVariable = "SubClass";
 }
 
 // --------------------------------
@@ -26,32 +30,24 @@ class SubClass: SuperClass {
 // プロパティにしてgetterを生やす。こうしたら関数扱いなのでoverrideができるようになる。
 class SuperClassGetter {
   var instanceVariable: String { get { return "SuperClass" } }
-  var instanceVariableSuperOnly: String { get { return "SuperClassOnly" } }
 
   func SuperClassMethod() {
     print(instanceVariable);
-  }
-
-  func CallInstanceVariableSuperOnly() {
-    print(instanceVariableSuperOnly);
   }
 }
 
 class SubClassGetter: SuperClassGetter {
   override var instanceVariable: String { get { return "SubClass" } };
-
-  func SubClassMethod() {
-    print(instanceVariable);
-  }
 }
 
-
+print("---- SubClass ----");
 let sub = SubClass();
 sub.SuperClassMethod();
-sub.SubClassMethod();
-sub.CallInstanceVariableSuperOnly();
 
+print("---- SubClassInternalLet ----");
+let subi = SubClassInternalLet();
+subi.SuperClassMethod();
+
+print("---- SubClassGetter ----");
 let subg = SubClassGetter();
 subg.SuperClassMethod();
-subg.SubClassMethod();
-subg.CallInstanceVariableSuperOnly();
