@@ -27,8 +27,9 @@ class SubClassInternalLet: SuperClassInternalLet {
 
 // --------------------------------
 
-// プロパティにしてgetterを生やす。こうしたら関数扱いなのでoverrideができるようになる。
+// Computed Propertyにしてgetterを生やす。こうしたら関数扱いなのでoverrideができるようになる。
 class SuperClassGetter {
+  // letだと、error: 'let' declarations cannot be computed properties
   var instanceVariable: String { get { return "SuperClass" } }
 
   func SuperClassMethod() {

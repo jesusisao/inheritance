@@ -2,23 +2,14 @@
 class SuperClass {
 // デフォルトだとprivate（クラス外からアクセス不可になる）
     std::string instanceVariable = "SuperClass";
-    std::string instanceVariableSuperOnly = "instanceVariableSuperOnly";
 public:
     void superClassMethod() {
         std::cout << instanceVariable << std::endl;
-    }
-
-    void callInstanceVariableSuperOnly() {
-        std::cout << instanceVariableSuperOnly << std::endl;
     }
 };
 
 class SubClass : public SuperClass {
     std::string instanceVariable = "SubClass";
-public:
-    void subClassMethod() {
-        std::cout << instanceVariable << std::endl;
-    }
 };
 
 // -------------------------------
@@ -26,14 +17,9 @@ public:
 class SuperClassProtected {
 protected:
     std::string instanceVariable = "SuperClass";
-    std::string instanceVariableSuperOnly = "instanceVariableSuperOnly";
 public:
     void superClassMethod() {
         std::cout << instanceVariable << std::endl;
-    }
-
-    void callInstanceVariableSuperOnly() {
-        std::cout << instanceVariableSuperOnly << std::endl;
     }
 };
 
@@ -46,18 +32,63 @@ public:
     }
 };
 
+// -------------------------------
+
+class SuperClassGetter {
+protected:
+    std::string instanceVariable() {
+        return "SuperClass";
+    }
+public:
+    void superClassMethod() {
+        std::cout << instanceVariable() << std::endl;
+    }
+};
+
+class SubClassGetter : public SuperClassGetter {
+protected:
+    std::string instanceVariable() {
+        return "SubClass";
+    }
+};
+
+// -------------------------------
+
+class SuperClassGetterOverride {
+protected:
+    virtual std::string instanceVariable() {
+        return "SuperClass";
+    }
+public:
+    void superClassMethod() {
+        std::cout << instanceVariable() << std::endl;
+    }
+};
+
+class SubClassGetterOverride : public SuperClassGetterOverride {
+protected:
+    std::string instanceVariable() override {
+        return "SubClass";
+    }
+};
+
 int main()
 {
-  std::cout << "---- SubClass ----" << std::endl;
-  SubClass sub;
-  sub.superClassMethod();
-  sub.subClassMethod();
-  sub.callInstanceVariableSuperOnly();
+    std::cout << "---- SubClass ----" << std::endl;
+    SubClass sub;
+    sub.superClassMethod();
 
-  std::cout << "---- SubClassProtected ----" << std::endl;
-  SubClassProtected subp;
-  subp.superClassMethod();
-  subp.subClassMethod();
-  subp.callInstanceVariableSuperOnly();
-  return 0;
+    std::cout << "---- SubClassProtected ----" << std::endl;
+    SubClassProtected subp;
+    subp.superClassMethod();
+
+    std::cout << "---- SubClassGetter ----" << std::endl;
+    SubClassGetter subg;
+    subg.superClassMethod();
+
+    std::cout << "---- SuperClassGetterOverride ----" << std::endl;
+    SuperClassGetterOverride subgo;
+    subgo.superClassMethod();
+
+    return 0;
 }

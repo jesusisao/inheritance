@@ -3,3 +3,5 @@
 swift-sample
 *.jar
 *.out
+
+.vscode
