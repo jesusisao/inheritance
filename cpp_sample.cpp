@@ -32,7 +32,6 @@ protected:
 // -------------------------------
 
 class SuperClassGetter {
-protected:
     std::string instanceVariable() {
         return "SuperClass";
     }
@@ -43,6 +42,25 @@ public:
 };
 
 class SubClassGetter : public SuperClassGetter {
+    std::string instanceVariable() {
+        return "SubClass";
+    }
+};
+
+// -------------------------------
+
+class SuperClassProtectedGetter {
+protected:
+    std::string instanceVariable() {
+        return "SuperClass";
+    }
+public:
+    void superClassMethod() {
+        std::cout << instanceVariable() << std::endl;
+    }
+};
+
+class SubClassProtectedGetter : public SuperClassProtectedGetter {
 protected:
     std::string instanceVariable() {
         return "SubClass";
@@ -51,7 +69,7 @@ protected:
 
 // -------------------------------
 
-class SuperClassGetterOverride {
+class SuperClassProtectedGetterOverride {
 protected:
     virtual std::string instanceVariable() {
         return "SuperClass";
@@ -62,7 +80,7 @@ public:
     }
 };
 
-class SubClassGetterOverride : public SuperClassGetterOverride {
+class SubClassProtectedGetterOverride : public SuperClassProtectedGetterOverride {
 protected:
     std::string instanceVariable() override {
         return "SubClass";
@@ -83,9 +101,13 @@ int main()
     SubClassGetter subg;
     subg.superClassMethod();
 
-    std::cout << "---- SubClassGetterOverride ----" << std::endl;
-    SubClassGetterOverride subgo;
-    subgo.superClassMethod();
+    std::cout << "---- SubClassProtectedGetter ----" << std::endl;
+    SubClassProtectedGetter subpg;
+    subpg.superClassMethod();
+
+    std::cout << "---- SubClassProtectedGetterOverride ----" << std::endl;
+    SubClassProtectedGetterOverride subpgo;
+    subpgo.superClassMethod();
 
     return 0;
 }
