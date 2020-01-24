@@ -12,7 +12,7 @@ class SubClass: SuperClass {
 
 // --------------------------------
 
-class SuperClassInternalLet {
+class SuperClassInternal {
   let instanceVariable = "Error";
 
   func SuperClassMethod() {
@@ -20,7 +20,7 @@ class SuperClassInternalLet {
   }
 }
 
-class SubClassInternalLet: SuperClassInternalLet {
+class SubClassInternal: SuperClassInternal {
   // error: cannot override with a stored property 'instanceVariable'
   // let instanceVariable = "SubClass";
 }
@@ -30,7 +30,7 @@ class SubClassInternalLet: SuperClassInternalLet {
 // Computed Propertyにしてgetterを生やす。こうしたら関数扱いなのでoverrideができるようになる。
 class SuperClassGetter {
   // letだと、error: 'let' declarations cannot be computed properties
-  var instanceVariable: String { get { return "SuperClass" } }
+  private var instanceVariable: String { get { return "SuperClass" } }
 
   func SuperClassMethod() {
     print(instanceVariable);
@@ -38,6 +38,22 @@ class SuperClassGetter {
 }
 
 class SubClassGetter: SuperClassGetter {
+  private var instanceVariable: String { get { return "SubClass" } };
+}
+
+// --------------------------------
+
+// Computed Propertyにしてgetterを生やす。こうしたら関数扱いなのでoverrideができるようになる。
+class SuperClassInternalGetter {
+  // letだと、error: 'let' declarations cannot be computed properties
+  var instanceVariable: String { get { return "SuperClass" } }
+
+  func SuperClassMethod() {
+    print(instanceVariable);
+  }
+}
+
+class SubClassInternalGetter: SuperClassInternalGetter {
   override var instanceVariable: String { get { return "SubClass" } };
 }
 
@@ -45,10 +61,14 @@ print("---- SubClass ----");
 let sub = SubClass();
 sub.SuperClassMethod();
 
-print("---- SubClassInternalLet ----");
-let subi = SubClassInternalLet();
+print("---- SubClassInternal ----");
+let subi = SubClassInternal();
 subi.SuperClassMethod();
 
 print("---- SubClassGetter ----");
 let subg = SubClassGetter();
 subg.SuperClassMethod();
+
+print("---- SubClassInternalGetter ----");
+let subig = SubClassInternalGetter();
+subig.SuperClassMethod();
