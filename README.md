@@ -40,7 +40,10 @@ scala ScalaSample
 
 ## C++のコンパイルと実行
 
+C++11の規格の文法を用いているため、
+コンパイルのバージョンを指定しないと警告が出てくる。
+
 ```
-g++ cpp_sample.cpp
+clang++ cpp_sample.cpp -std=c++11
 ./a.out
 ```
