@@ -1,4 +1,5 @@
 #include <iostream>
+
 class SuperClass {
 // デフォルトだとprivate（クラス外からアクセス不可になる）
     std::string instanceVariable = "SuperClass";
@@ -26,10 +27,6 @@ public:
 class SubClassProtected : public SuperClassProtected {
 protected:
     std::string instanceVariable = "SubClass";
-public:
-    void subClassMethod() {
-        std::cout << instanceVariable << std::endl;
-    }
 };
 
 // -------------------------------
@@ -86,8 +83,8 @@ int main()
     SubClassGetter subg;
     subg.superClassMethod();
 
-    std::cout << "---- SuperClassGetterOverride ----" << std::endl;
-    SuperClassGetterOverride subgo;
+    std::cout << "---- SubClassGetterOverride ----" << std::endl;
+    SubClassGetterOverride subgo;
     subgo.superClassMethod();
 
     return 0;
