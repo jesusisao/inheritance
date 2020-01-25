@@ -1,15 +1,10 @@
 class SuperClass
   def initialize()
     @instance_variable = "SuperClass"
-    @instance_variable_super_only = "SuperClassOnly"
   end
 
   def super_class_method
     p @instance_variable
-  end
-
-  def call_instance_variable_super_only
-    p @instance_variable_super_only
   end
 end
 
@@ -18,13 +13,56 @@ class SubClass < SuperClass
     super()
     @instance_variable = "SubClass"
   end
-  
-  def sub_class_method
-    p @instance_variable
+end
+
+# --------------------------------
+
+class SuperClassGetter
+  def instance_variable()
+    "SuperClass"
+  end
+
+  def super_class_method
+    p instance_variable
   end
 end
 
+class SubClassGetter < SuperClassGetter
+  def instance_variable()
+    "SubClass"
+  end
+end
+
+# --------------------------------
+
+class SuperClassGetterPrivate
+  def super_class_method
+    p instance_variable
+  end
+
+  private
+
+  def instance_variable()
+    "SuperClass"
+  end
+end
+
+class SubClassGetterPrivate < SuperClassGetterPrivate
+  private
+  
+  def instance_variable()
+    "SubClass"
+  end
+end
+
+p '---- SubClass ----'
 subc = SubClass.new
 subc.super_class_method
-subc.sub_class_method
-subc.call_instance_variable_super_only
+
+p '---- SubClassGetter ----'
+subg = SubClassGetter.new
+subg.super_class_method
+
+p '---- SubClassGetterPrivate ----'
+subgp = SubClassGetterPrivate.new
+subgp.super_class_method
