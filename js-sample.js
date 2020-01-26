@@ -1,15 +1,10 @@
 class SuperClass {
   constructor() {
     this.instanceVariable = "SuperClass"
-    this.instanceVariableSuperOnly = "SuperClassOnly"
   }
 
   superClassMethod() {
     console.log(this.instanceVariable)
-  }
-
-  callInstanceVariableSuperOnly() {
-    console.log(this.instanceVariableSuperOnly)
   }
 }
 
@@ -18,45 +13,31 @@ class SubClass extends SuperClass {
     super()
     this.instanceVariable = "SubClass"
   }
-
-  subClassMethod() {
-    console.log(this.instanceVariable)
-  }
 }
 
 // ------------------------
 
-function LegacySuperClass() {};
-LegacySuperClass.prototype.instanceVariable = "SuperClass";
-LegacySuperClass.prototype.instanceVariableSuperOnly = "SuperClassOnly";
+function LegacySuperClass() {
+  this.instanceVariable = "SuperClass";
+};
 LegacySuperClass.prototype.superClassMethod = function() {
   console.log(this.instanceVariable)
 }; 
-LegacySuperClass.prototype.callInstanceVariableSuperOnly = function() {
-  console.log(this.instanceVariableSuperOnly)
-}; 
 
-function LegacySubClass() {};
-LegacySubClass.prototype = new LegacySuperClass();
-LegacySubClass.prototype.instanceVariable = "SubClass";
-LegacySubClass.prototype.subClassMethod = function() {
-  console.log(this.instanceVariable)
+function LegacySubClass() {
+  this.instanceVariable = "SubClass";
 };
+LegacySubClass.prototype = new LegacySuperClass();
 
 // ------------------------
 
 class SuperClassArrow {
   constructor() {
     this.instanceVariable = "SuperClass"
-    this.instanceVariableSuperOnly = "SuperClassOnly"
   }
 
   superClassMethod = () => {
     console.log(this.instanceVariable)
-  }
-
-  callInstanceVariableSuperOnly = () => {
-    console.log(this.instanceVariableSuperOnly)
   }
 }
 
@@ -65,9 +46,23 @@ class SubClassArrow extends SuperClassArrow {
     super()
     this.instanceVariable = "SubClass"
   }
+}
 
-  subClassMethod = () => {
-    console.log(this.instanceVariable)
+// ------------------------
+
+class SuperClassGetterArrow {
+  instanceVariable = () => {
+    return "SuperClass"
+  }
+
+  superClassMethod = () => {
+    console.log(this.instanceVariable())
+  }
+}
+
+class SubClassGetterArrow extends SuperClassGetterArrow {
+  instanceVariable = () => {
+    return "SubClass"
   }
 }
 
@@ -76,21 +71,15 @@ class SubClassArrow extends SuperClassArrow {
 console.log('---- SubClass ----')
 const sub = new SubClass()
 sub.superClassMethod()
-sub.subClassMethod()
-sub.callInstanceVariableSuperOnly()
-sub.__proto__.subClassMethod()
 
 console.log('---- LegacySubClass ----')
 var lsub = new LegacySubClass()
 lsub.superClassMethod()
-lsub.subClassMethod()
-lsub.callInstanceVariableSuperOnly()
-lsub.__proto__.subClassMethod()
 
 console.log('---- SubClassArrow ----')
 const suba = new SubClassArrow()
 suba.superClassMethod()
-suba.subClassMethod()
-suba.callInstanceVariableSuperOnly()
-// エラー
-// suba.__proto__.subClassMethod()
+
+console.log('---- SubClassGetterArrow ----')
+const subga = new SubClassGetterArrow()
+subga.superClassMethod()
