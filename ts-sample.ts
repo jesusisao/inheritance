@@ -1,56 +1,58 @@
 class SuperClass {
-  // privateは同じクラスからのみアクセス可能
   private readonly instanceVariable: string
-  private readonly instanceVariableSuperOnly: string
 
   constructor() {
-    this.instanceVariable = "SuperClass"
-    this.instanceVariableSuperOnly = "SuperClassOnly"
+    this.instanceVariable = "Error"
   }
 
   public superClassMethod() {
     console.log(this.instanceVariable)
-  }
-
-  public callInstanceVariableSuperOnly() {
-    console.log(this.instanceVariableSuperOnly)
   }
 }
 
 class SubClass extends SuperClass {
   // instanceVariableで定義しようとすると、
   // TS2415: Class 'SubClass' incorrectly extends base class 'SuperClass'.
-  private readonly instanceVariable2: string
-  
-  constructor() {
-    super()
-    this.instanceVariable2 = "SubClass"
+  // private readonly instanceVariable: string
+
+  // constructor() {
+  //   super()
+  //   this.instanceVariable = "SubClass"
+  // }
+}
+
+// ------------------------
+
+class SuperClassGetter {
+  private instanceVariable() {
+    return "Error"
   }
 
-  public subClassMethod() {
-    // instanceVariableにアクセスしようとするとエラー。
-    // プロパティ 'instanceVariable' はプライベートで、クラス 'SuperClass' 内でのみアクセスできます。ts(2341)
-    console.log(this.instanceVariable2)
+  public superClassMethod() {
+    console.log(this.instanceVariable())
   }
+}
+
+class SubClassGetter extends SuperClassGetter {
+  // instanceVariableで定義しようとすると、
+  // TS2415: Class 'SubClassGetter' incorrectly extends base class 'SuperClassGetter'.
+  // Types have separate declarations of a private property 'instanceVariable'.
+  // private instanceVariable() {
+  //   return "SubClass"
+  // }
 }
 
 // ------------------------
 
 class SuperClassProtected {
   protected readonly instanceVariable: string
-  protected readonly instanceVariableSuperOnly: string
 
   constructor() {
     this.instanceVariable = "SuperClass"
-    this.instanceVariableSuperOnly = "SuperClassOnly"
   }
 
   public superClassMethod() {
     console.log(this.instanceVariable)
-  }
-
-  public callInstanceVariableSuperOnly() {
-    console.log(this.instanceVariableSuperOnly)
   }
 }
 
@@ -61,60 +63,66 @@ class SubClassProtected extends SuperClassProtected {
     super()
     this.instanceVariable = "SubClass"
   }
+}
 
-  public subClassMethod() {
-    console.log(this.instanceVariable)
+// ------------------------
+
+class SuperClassProtectedGetterArrow {
+  protected instanceVariable = () => {
+    return "SuperClass"
+  }
+
+  public superClassMethod = () => {
+    console.log(this.instanceVariable())
+  }
+}
+
+class SubClassProtectedGetterArrow extends SuperClassProtectedGetterArrow {
+  protected instanceVariable = () => {
+    return "SubClass"
   }
 }
 
 // ------------------------
 
 // アロー関数版
-class SuperClassArrow {
+class SuperClassProtectedArrow {
   protected readonly instanceVariable: string
-  protected readonly instanceVariableSuperOnly: string
 
   constructor() {
     this.instanceVariable = "SuperClass"
-    this.instanceVariableSuperOnly = "SuperClassOnly"
   }
 
   public superClassMethod = () => {
     console.log(this.instanceVariable)
   }
-
-  public callInstanceVariableSuperOnly = () => {
-    console.log(this.instanceVariableSuperOnly)
-  }
 }
 
-class SubClassArrow extends SuperClassArrow {
+class SubClassProtectedArrow extends SuperClassProtectedArrow {
   protected readonly instanceVariable: string
   
   constructor() {
     super()
     this.instanceVariable = "SubClass"
   }
-
-  public subClassMethod = () => {
-    console.log(this.instanceVariable)
-  }
 }
 
 console.log('---- SubClass ----')
 const sub = new SubClass()
 sub.superClassMethod()
-sub.subClassMethod()
-sub.callInstanceVariableSuperOnly()
+
+console.log('---- SubClassGetter ----')
+const subg = new SubClassGetter()
+subg.superClassMethod()
 
 console.log('---- SubClassProtected ----')
 const subp = new SubClassProtected()
 subp.superClassMethod()
-subp.subClassMethod()
-subp.callInstanceVariableSuperOnly()
 
-console.log('---- SubClassArrow ----')
-const suba = new SubClassArrow()
-suba.superClassMethod()
-suba.subClassMethod()
-suba.callInstanceVariableSuperOnly()
+console.log('---- SubClassProtectedArrow ----')
+const subpa = new SubClassProtectedArrow()
+subpa.superClassMethod()
+
+console.log('---- SubClassProtectedGetterArrow ----')
+const subpga = new SubClassProtectedGetterArrow()
+subpga.superClassMethod()

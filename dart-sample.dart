@@ -6,6 +6,10 @@ void main() {
   print("---- SubClass ----");
   final sub = new SubClass();
   sub.superClassMethod();
+
+  print("---- SubClassGetter ----");
+  final subg = new SubClassGetter();
+  subg.superClassMethod();
 }
 
 class SuperClassPrivate {
@@ -30,4 +34,16 @@ class SuperClass {
 
 class SubClass extends SuperClass {
   final String instanceVariable = "SubClass";
+}
+
+// ------------------------------------
+
+class SuperClassGetter {
+  String instanceVariable() => "SuperClass";
+
+  void superClassMethod() => print(instanceVariable());
+}
+
+class SubClassGetter extends SuperClassGetter {
+  String instanceVariable() => "SubClass";
 }
